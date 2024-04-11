@@ -13,8 +13,8 @@ const ParkingAreasModel=mongoose.Schema({
         type:String,
         required:true
     },
-    prices:{
-        type:Array,
+    pricePerHour:{
+        type:Number,
         required:true
     },
     levelNumber:{
@@ -32,10 +32,13 @@ const ParkingAreasModel=mongoose.Schema({
     slots:{
         type:Array,
         required:true
-    }
+    },
+    
 },{
     timestamps:true
 })
+
+
 
 
 const ParkingAreas=mongoose.model("ParkingAreas",ParkingAreasModel)

@@ -1,11 +1,11 @@
 const mongoose=require("mongoose")
 
  const UserModel = mongoose.Schema({
-    uid:{
-        type:String,
-        required:true,
-        unique:true
-    },
+    // uid:{
+    //     type:String,
+    //     required:true,
+    //     unique:true
+    // },
 
     email:{
         type:String,
@@ -22,6 +22,10 @@ const mongoose=require("mongoose")
         required:true,
         unique:true
     },
+    password:{
+        type:String,
+        required:true
+    },
     role:{
         type:String,
         required:true,
@@ -32,8 +36,15 @@ const mongoose=require("mongoose")
     },
     plateNumber:{
         type:String,
-        required:true,
         unique:true
+    },
+    confirmed:{
+        type:Boolean,
+        default:false
+    },
+    otp:{
+        type:Number,
+        required:true
     }
 
  },
