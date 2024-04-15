@@ -28,7 +28,7 @@ const ConfirmAccount=async(req,res,next)=>{
 
 const loginWithEmail = async (req,res,next) =>{
     try {
-        const user=await UserModel.findOne({email:req.body.email})
+        const user=await UserModel.findOne({email:req.body.identifier})
         if(!user){
             res.status(404).json({message:"User not found"})
         }
@@ -52,7 +52,7 @@ const loginWithEmail = async (req,res,next) =>{
 
 const loginWithPhoneNumber = async (req,res,next)=>{
     try {
-        const user=await UserModel.findOne({phoneNumber:req.body.phoneNumber})
+        const user=await UserModel.findOne({phoneNumber:req.body.identifier})
         if(!user){
             res.status(404).json({message:"User not found"})
         }
