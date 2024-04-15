@@ -1,23 +1,15 @@
 const mongoose=require("mongoose")
-const { reset } = require("nodemon")
+
 
  const UserModel = mongoose.Schema({
-    // uid:{
-    //     type:String,
-    //     required:true,
-    //     unique:true
-    // },
+
 
     email:{
         type:String,
         required:true,
         unique:true
     },
-    countryCode:{
-        type:String,
-        required:true,
-   
-    },
+
     phoneNumber:{
         type:String,
         required:true,
