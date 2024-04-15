@@ -1,4 +1,5 @@
 const mongoose=require("mongoose")
+const { reset } = require("nodemon")
 
  const UserModel = mongoose.Schema({
     // uid:{
@@ -30,8 +31,8 @@ const mongoose=require("mongoose")
         type:String,
         required:true,
         enum:{
-            values:["security guard","user","parking owner"],
-            message:"role must be admin or user"
+            values:["admin","user","parking owner"],
+            message:"role must be valid"
         }
     },
     plateNumber:{
@@ -45,6 +46,10 @@ const mongoose=require("mongoose")
     otp:{
         type:Number,
         required:true
+    },
+    resetPasswordOtp:{
+        type:String,
+
     }
 
  },

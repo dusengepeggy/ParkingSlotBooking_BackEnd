@@ -14,8 +14,8 @@ const BookingModel= mongoose.Schema({
         type:String,
         required:true
     },
-    time:{
-        type:String,
+    duration:{
+        type:Number,
         required:true
     },
     plate:{
@@ -23,6 +23,10 @@ const BookingModel= mongoose.Schema({
         required:true
     },
     slot:{
+        type:String,
+        required:true
+    },
+    parkingAreaId:{
         type:String,
         required:true
     }

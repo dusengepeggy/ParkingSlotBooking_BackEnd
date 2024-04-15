@@ -15,7 +15,7 @@ const createUser = async (req, res, next) => {
             var otp=Math. floor(Math. random() * (9999 - 1000 + 1)) + 1000
             const newUser = await UserModel.create({...rest,password:newPassword,otp:otp})
             
-            await sendEmail(newUser.email,"Confirm it's you ",`your OTP-code is ${otp}`)
+            await sendEmail(newUser.email,"Confirm it's you ",`your OTP-code is ${otp} `)
             res.status(201).json({ message: "User created successfully", user: newUser })
 
         }
@@ -77,6 +77,29 @@ const getAllUsers = async (req,res,next)=>{
     }
 }
 
+const forgotPassword=async(req,res,next)=>{
+    try {
+        const exist =await UserModel.findOne({email:req.body.email})
+        if (!exist) {
+            res.status(404).json({ message: "User not found" })
+        }
+        else{
+            const otp=Math. floor(Math. random() * (9999 - 1000 + 1)) + 1000
+            await UserModel.findByIdAndUpdate({_id:exist._id},{resetPasswordOtp:otp})
+            await sendEmail(req.body.email,"RESET YOUR PASSWORD",`your OTP-code for reseting password is ${otp} `)
+            res.status(201).json({ message: "OTP sent", otp:otp})
+        }
+
+        
+    } catch (error) {
+        res.status(500).json({message:"Error reseting password user" , error:error.message})
+        
+    }
+    
+     
+
+}
+
 
 
 
@@ -87,6 +110,7 @@ module.exports = {
     deleteUser,
     getUser,
     getAllUsers,
+    forgotPassword
 }
 
 

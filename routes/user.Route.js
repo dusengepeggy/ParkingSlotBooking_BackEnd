@@ -1,5 +1,5 @@
-const { ConfirmAccount,loginWithEmail ,loginWithPhoneNumber} = require("../controllers/user.Auth")
-const {createUser,updateUser, deleteUser, getUser,getAllUsers} =require("../controllers/user.Controller")
+const { ConfirmAccount,loginWithEmail ,loginWithPhoneNumber,checkResetPasswordOtp} = require("../controllers/user.Auth")
+const {createUser,updateUser, deleteUser, getUser,getAllUsers,forgotPassword} =require("../controllers/user.Controller")
 const express = require("express")
 
 const studentRoute=express.Router()
@@ -20,6 +20,9 @@ studentRoute.post("/loginWithEmail",loginWithEmail)
 
 studentRoute.post("/loginWithPhoneNumber",loginWithPhoneNumber)
 
+studentRoute.post("/forgotPassword",forgotPassword)
+
+studentRoute.post("/checkResetPasswordOtp",checkResetPasswordOtp)
 
 
 module.exports={studentRoute}

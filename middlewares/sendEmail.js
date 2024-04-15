@@ -1,13 +1,14 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 
-const sendEmail = async (email, subject, text) => {
+const sendEmail = async (email, subject, text,time=0) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: process.env.GOOGLE_ACCOUNT,
                 pass: process.env.GOOGLE_ACCOUNT_PASSWORD,
+                timeout:time
             },
         });
 
