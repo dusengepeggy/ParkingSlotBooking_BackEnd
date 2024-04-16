@@ -1,11 +1,12 @@
 const express= require("express")
 const mongoose=require("mongoose")
+const cors =require("cors")
 require("dotenv").config()
 const port= process.env.PORT
 const db =process.env.MONGO_URL
 const app = express()
 const route=require("./routes")
-
+app.use(cors())
 app.use(express.json());
 
 app.use('/api/v1',route)
