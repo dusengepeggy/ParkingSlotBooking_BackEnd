@@ -34,7 +34,7 @@ const loginWithEmail = async (req,res,next) =>{
         }
         else{
             var passwordCheck =await bcrypt.compare(req.body.password,user.password) 
-            if (passwordCheck && user.confirmed===true) {
+            if (passwordCheck ===true) {
                 
                 const token=await jwt.sign({ id: user._id },jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY))
                 res.status(200).json({message:"Login successful",user:user,token:token})
