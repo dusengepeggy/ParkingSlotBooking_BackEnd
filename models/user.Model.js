@@ -22,10 +22,7 @@ const mongoose=require("mongoose")
     role:{
         type:String,
         required:true,
-        enum:{
-            values:["admin","user","parking owner"],
-            message:"role must be valid"
-        }
+
     },
     plateNumber:{
         type:String,
