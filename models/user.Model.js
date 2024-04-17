@@ -26,7 +26,7 @@ const mongoose=require("mongoose")
     },
     plateNumber:{
         type:String,
-        unique:true
+        
     },
     confirmed:{
         type:Boolean,
