@@ -76,12 +76,12 @@ const loginWithPhoneNumber = async (req,res,next)=>{
 
 const checkResetPasswordOtp = async (req,res,next) =>{
     try {
-        const user=await UserModel.findOne({email:req.query.email})
+        const user=await UserModel.findOne({email:req.body.email})
         if(!user){
             res.status(404).json({message:"User not found"})
         }
         else{
-            if (req.body.otp===user.resetPasswordOtp) {
+            if (req.body.otp==user.resetPasswordOtp) {
                 res.status(200).json({message:"Reset password otp confirmed"})
             } else {
                 res.status(404).json({message:"Invalid OTP"})
