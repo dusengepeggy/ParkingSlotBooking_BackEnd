@@ -6,7 +6,7 @@ const ParkingAreasModel=mongoose.Schema({
         required:true
     },
     location:{
-        type:String,
+        type:Object,
         required:true
     },
     generalInfo:{
