@@ -43,9 +43,32 @@ const updateUser = async (req, res, next) => {
     }
 }
 
+const updatePassword=async (req,res,next)=>{
+    try {
+        const exist = await UserModel.findOne({ email:req.body.email})
+        if (!exist) {
+            res.status(404).json({ message: "User not found" })
+        }
+        else {
+            const user = await UserModel.findByIdAndUpdate(exist._id, { password: req.body.password })
+            res.status(200).json({ message: "Password updated successfully", user: user })
+        }
+    } 
+    catch (error) {
+        res.status(500).json({ message: "Error updating password", error: error.message })
+    }
+}
+
 const deleteUser =async (req,res,next)=>{
     try {
         const exist = await UserModel.findByIdAndDelete({_id:req.query.id})
+        if (exist) {
+            res.status(200).json({ message: "User deleted successfully" })
+        }
+        else {
+            res.status(404).json({ message: "User not found" })
+        }
+
         
     } catch (error) {
         res.status(500).json({message:"Error updating user" , error:error.message})
@@ -110,7 +133,8 @@ module.exports = {
     deleteUser,
     getUser,
     getAllUsers,
-    forgotPassword
+    forgotPassword,
+    updatePassword
 }
 
 
