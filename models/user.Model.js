@@ -11,9 +11,10 @@ const mongoose=require("mongoose")
     },
 
     phoneNumber:{
+        unique:true,
         type:String,
         required:true,
-        unique:true
+        
     },
     password:{
         type:String,
