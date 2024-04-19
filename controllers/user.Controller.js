@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs")
 const createUser = async (req, res, next) => {
     try {
         const { password, ...rest } = req.body
-        const alreadyExist = await UserModel.findOne({ email: req.body.email })
+        const alreadyExist = await UserModel.findOne({ email: req.body.email }||{phoneNumber:req.body.phoneNumber})
         if (!alreadyExist) {
             var newPassword = await bcrypt.hashSync(password, 16)
             var otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
