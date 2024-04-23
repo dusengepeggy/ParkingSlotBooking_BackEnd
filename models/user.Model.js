@@ -11,8 +11,9 @@ const mongoose=require("mongoose")
     },
 
     phoneNumber:{
-        unique:true,
+        
         type:String,
+        unique:true,
         required:true,
         
     },

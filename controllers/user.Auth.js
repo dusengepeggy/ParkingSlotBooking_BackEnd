@@ -61,7 +61,7 @@ const loginWithPhoneNumber = async (req,res,next)=>{
             if (passwordCheck ) {
                 
                 const token=await jwt.sign({ id: user._id },jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY))
-                res.status(200).json({message:"Login successful",user:user,token:token})
+                res.status(200).json({message:"Login successful",user:user,token:token,})
             } else {
                 res.status(404).json({message:"Invalid password"})
                 
