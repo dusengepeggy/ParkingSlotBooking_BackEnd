@@ -33,7 +33,15 @@ const BookingModel= mongoose.Schema({
     parkingAreaId:{
         type:String,
         required:true
-    }
+    },
+    overtimeNotified: {
+        type: Boolean,
+        default: false
+      },
+      overtimeDuration: {
+        type: Number, 
+        default: 0
+      }
 },{
     timestamps:true
 })
