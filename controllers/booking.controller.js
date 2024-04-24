@@ -38,7 +38,7 @@ const createBooking = async (req, res, next) => {
         bookedSlot.booked = true
 
         console.log(allSlots)
-        const newBooking = await BookingModel.create({ ...rest, endDate: Date(endDate), startDate: Date(startDate), duration: Number(duration), parkingAreaId: bookedBuilding._id, slot: bookedSlot.name })
+        const newBooking = await BookingModel.create({ ...rest, endDate:new Date(endDate), startDate:new Date(startDate), duration: Number(duration), parkingAreaId: bookedBuilding._id, slot: bookedSlot.name })
 
         await ParkingAreas.findByIdAndUpdate({ _id: bookedBuilding._id }, { slots: allSlots })
 
@@ -47,10 +47,9 @@ const createBooking = async (req, res, next) => {
         nodeSchedule.scheduleJob(
             newBooking.endDate,
             async () => {
-
                 checkAndNotifyOvertime(newBooking._id);
-    
                 this.reschedule('*/5 * * * *');
+            
 
             }
         )
