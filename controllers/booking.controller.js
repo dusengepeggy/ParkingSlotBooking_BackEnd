@@ -5,9 +5,10 @@ const ParkingAreas = require ("../models/parkingAreas.Model")
 
 const createBooking = async (req, res, next) => {
     try { 
+        console.log(req.body);
         const bookedBuilding = await ParkingAreas.findOne({ _id: req.query.id })
         const allSlots=  bookedBuilding.slots
-        const bookedSlot = allSlots.find(slot=>slot.booked==false)
+        const bookedSlot = allSlots.find(slot=>slot.booked=false)
 
         bookedSlot.booked=true
 
@@ -32,8 +33,21 @@ const createBooking = async (req, res, next) => {
 
 const cancelBooking = async (req,res,next) =>{
     try {
-        const exist = await BookingModel.findByIdAndDelete({_id:req.query.id})
-        res.status(200).json({message:"Booking cancelled"})
+        const exist = await BookingModel.findOne({_id:req.query.id})
+
+        if (!exist) {
+            res.status(404).json({ message: "Booking not found" })
+        }
+        else{
+            const bookedBuilding = await ParkingAreas.findOne({ _id: exist.parkingAreaId })
+            const allSlots=  bookedBuilding.slots
+            const bookedSlot = allSlots.find(slot=>slot.name===exist.slot)
+            bookedSlot.booked=false
+            await ParkingAreas.findByIdAndUpdate({_id:exist.parkingAreaId},{slots:allSlots})
+            await BookingModel.findByIdAndDelete({_id:req.query.id})
+            res.status(200).json({message:"Booking cancelled"})
+        }
+       
         
     } catch (error) {
         res.status(500).json({message:"Error cancelling booking" , error:error.message})
@@ -43,6 +57,7 @@ const cancelBooking = async (req,res,next) =>{
 
 const startBooking =async (req,res,next)=>{
     try {
+        
        
     } catch (error) {
         

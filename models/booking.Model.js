@@ -10,8 +10,12 @@ const BookingModel= mongoose.Schema({
         type:String,
         required:true
     },
-    date:{
-        type:String,
+    endDate:{
+        type:Date,
+        required:true
+    },
+    startDate:{
+        type:Date,
         required:true
     },
     duration:{
