@@ -6,6 +6,7 @@ const ParkingAreas = require ("../models/parkingAreas.Model")
 const createBooking = async (req, res, next) => {
     try { 
         console.log(req.body);
+        const {endDate,startDate,duration,...rest}=req.body
         const bookedBuilding = await ParkingAreas.findOne({ _id: req.query.id })
         const allSlots=  bookedBuilding.slots
         const bookedSlot = allSlots.find(slot=>slot.booked=false)
@@ -13,7 +14,7 @@ const createBooking = async (req, res, next) => {
         bookedSlot.booked=true
 
         console.log(allSlots)
-        const newBooking = await BookingModel.create({...req.body,parkingAreaId:bookedBuilding._id,slot:bookedSlot.name})
+        const newBooking = await BookingModel.create({...rest,endDate:Date(endDate),startDate:Date(startDate),duration:Number(duration),parkingAreaId:bookedBuilding._id,slot:bookedSlot.name})
 
 
         await ParkingAreas.findByIdAndUpdate({_id:bookedBuilding._id},{slots:allSlots})
