@@ -50,7 +50,7 @@ const createBooking = async (req, res, next) => {
 
                 checkAndNotifyOvertime(newBooking._id);
     
-                this.reschedule('*/15 * * * *');
+                this.reschedule('*/5 * * * *');
 
             }
         )
@@ -89,13 +89,25 @@ const cancelBooking = async (req, res, next) => {
     }
 }
 
-const startBooking = async (req, res, next) => {
+const checkoutCar=async(req,res,next)=>{
     try {
+        const exist = await BookingModel.findOne({ _id: req.query.id })
+        if (!exist) {
+            res.status(404).json({ message: "Booking not found" })
+        }
+        else {
 
-
-    } catch (error) {
-
+            const bookedBuilding = await ParkingAreas.findOne({ _id: exist.parkingAreaId })
+            const allSlots = bookedBuilding.slots
+            const bookedSlot = allSlots.find(slot => slot.name === exist.slot)
+            bookedSlot.booked = false
+            await ParkingAreas.findByIdAndUpdate({ _id: exist.parkingAreaId }, { slots: allSlots })
+            res.status(200).json({ message: "Booking cancelled" })
+        }
     }
+    catch (error) {
+        res.status(500).json({ message: "Error cancelling booking", error: error.message })
+    }    
 }
 
 
