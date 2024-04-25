@@ -41,7 +41,11 @@ const BookingModel= mongoose.Schema({
       overtimeDuration: {
         type: Number, 
         default: 0
-      }
+      },
+    status:{
+        type:String,
+        default:"Pending"
+    }
 },{
     timestamps:true
 })

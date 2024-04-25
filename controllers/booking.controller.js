@@ -75,7 +75,7 @@ const cancelBooking = async (req, res, next) => {
             const bookedSlot = allSlots.find(slot => slot.name === exist.slot)
             bookedSlot.booked = false
             await ParkingAreas.findByIdAndUpdate({ _id: exist.parkingAreaId }, { slots: allSlots })
-            await BookingModel.findByIdAndDelete({ _id: req.query.id })
+            await BookingModel.findByIdAndUpdate({ _id: req.query.id },{status:"cancelled"})
             res.status(200).json({ message: "Booking cancelled" })
         }
 
@@ -107,8 +107,20 @@ const checkoutCar=async(req,res,next)=>{
     }    
 }
 
+const findBookingsByEmail = async (req,res,next) =>{
+    try {
+        const bookings = await BookingModel.find({ email: req.query.email })
+        res.status(200).json({ message: "Bookings found successfully", bookings: bookings })
+        
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching bookings", error: error.message })
+        
+    }
+}
+
 
 module.exports = {
     createBooking,
-    cancelBooking
+    cancelBooking,
+    findBookingsByEmail
 }
