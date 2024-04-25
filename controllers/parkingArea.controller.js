@@ -23,6 +23,7 @@ const addParking = async (req, res, next) => {
 
 
             }
+            
             const newParking = new ParkingAreas({ ...req.body, slots: totalSlots })
             const parking = await newParking.save()
             res.status(201).json({ message: "Parking added successfully", parking })

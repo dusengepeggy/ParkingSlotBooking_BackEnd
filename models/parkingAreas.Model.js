@@ -41,6 +41,10 @@ const ParkingAreasModel=mongoose.Schema({
         type:Array,
         required:true
     },
+    categories:{
+        type:Array,
+        required:true
+    }
     
 },{
     timestamps:true

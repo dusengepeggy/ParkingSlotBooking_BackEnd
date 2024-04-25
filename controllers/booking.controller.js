@@ -44,14 +44,12 @@ const createBooking = async (req, res, next) => {
 
         await sendEmail(req.body.email, 'YOUR BOOKING SLOT', `Your reservation have been successfully made your slot number is :${bookedSlot.name}`)
 
-        nodeSchedule.scheduleJob(
-            newBooking.endDate,
-            async () => {
+        nodeSchedule.scheduleJob(" * * * * * *",
+            function(a=newBooking.endDate){
                 checkAndNotifyOvertime(newBooking._id);
-                this.reschedule('*/5 * * * *');
-            
-
+                this.reschedule('* * * * * *');
             }
+            
         )
 
 
