@@ -1,3 +1,4 @@
+const BookingModel = require("../models/booking.Model");
 const ParkingAreas = require("../models/parkingAreas.Model")
 
 
@@ -92,6 +93,7 @@ const deleteParking = async (req, res, next) => {
     try {
         const exist = await ParkingAreas.findByIdAndDelete({ _id: req.query.id })
         if (exist) {
+            await BookingModel.findOneAndDelete({parkingAreaId:exist._id})
             res.status(200).json({ message: "Parking deleted successfully" })
         }
         else {
