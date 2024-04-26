@@ -3,28 +3,49 @@ const ParkingAreas = require("../models/parkingAreas.Model")
 
 const addParking = async (req, res, next) => {
     try {
-        const alreadyExist = await ParkingAreas.findOne({ owner: req.body.owner })
+        const alreadyExist = await ParkingAreas.findOne({name: req.body.name })
         if (alreadyExist) {
             res.status(400).json({ message: "Parking already exist" })
         }
         else {
 
-            var totalSlots = []
-            var lev = 65
-            for (let i = 1; i <= req.body.levelNumber; i++) {
-                for (let j = 1; j <= req.body.slotPerLevel; j++) {
-                    var name = `${String.fromCharCode(lev)}${j}`
-                    totalSlots.push({
-                        name: name,
-                        booked: false
-                    })
-                }
-                lev++
-
-
-            }
+            let slotsCreated = 0;
+            let totalSlotsArray = [];
+            let totalSlots = req.body.levelNumber * req.body.slotPerLevel;
             
-            const newParking = new ParkingAreas({ ...req.body, slots: totalSlots })
+            var lev = 65
+
+            req.body.categories.forEach(category => {
+                for (let i = 1; i <= category.slots; i++) {
+                    let name = `${String.fromCharCode(lev)}${i}`;
+                    totalSlotsArray.push({
+                        name: name,
+                        booked: false,
+                        category: category.name,
+                        price: category.price
+                    });
+                    slotsCreated++;
+                }
+                lev++;
+            });
+    
+            // Check for remaining slots and assign them
+            if (slotsCreated < totalSlots) {
+                const remainingSlots = totalSlots - slotsCreated;
+                for (let i = 1; i <= remainingSlots; i++) {
+                    let name = `${String.fromCharCode(lev)}${i}`;
+                    totalSlotsArray.push({
+                        name: name,
+                        booked: false,
+                        category: "Uncategorized",
+                        price: req.body.pricePerHour  // You can choose to set a default price or leave it null
+                    });
+                }
+            }
+    
+    
+            
+            const newParking = new ParkingAreas({ ...req.body, slots: totalSlotsArray })
             const parking = await newParking.save()
             res.status(201).json({ message: "Parking added successfully", parking })
         }
