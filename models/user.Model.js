@@ -19,7 +19,6 @@ const mongoose=require("mongoose")
     },
     userName:{
         type:String,
-        required:true,
         unique:true
 
     },
