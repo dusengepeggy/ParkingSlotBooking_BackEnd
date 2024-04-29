@@ -11,7 +11,6 @@ const createUser = async (req, res, next) => {
             var otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
             const newUser = await UserModel.create({ ...rest, password: newPassword, otp: otp })
 
-            await sendEmail(newUser.email, "Confirm it's you ", `your OTP-code is ${otp} `)
             res.status(201).json({ message: "User created successfully", user: newUser })
 
 
@@ -51,7 +50,8 @@ const updatePassword = async (req, res, next) => {
             res.status(404).json({ message: "User not found" })
         }
         else {
-            const user = await UserModel.findByIdAndUpdate(exist._id, { password: req.body.password })
+            const newPw = await bcrypt.hashSync(req.body.password, 16)
+            const user = await UserModel.findByIdAndUpdate(exist._id, { password:newPw  })
             res.status(200).json({ message: "Password updated successfully", user: user })
         }
     }

@@ -9,6 +9,10 @@ const NotificationModel = mongoose.Schema({
         type:String,
         required:true
     },
+    booking:{
+        type:String,
+        required:true
+    },
     subject:{
         type:String,
         required:true
@@ -28,3 +32,5 @@ const NotificationModel = mongoose.Schema({
 {
     timestamps:true
 })
+
+module.exports = mongoose.model("Notification",NotificationModel)
