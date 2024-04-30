@@ -31,8 +31,9 @@ const mongoose=require("mongoose")
         required:true,
 
     },
-    plateNumber:{
-        type:String,
+    vehicle:{
+        type:Object,
+        
         
     },
     confirmed:{
