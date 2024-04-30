@@ -33,7 +33,7 @@ const createBooking = async (req, res, next) => {
         const { endDate, startDate, duration, ...rest } = req.body
         const bookedBuilding = await ParkingAreas.findOne({ _id: req.query.id })
         const allSlots = bookedBuilding.slots
-        const bookedSlot = allSlots.find(slot => slot.booked == false && slot.category ==  req.body.category.toLowerCase())
+        const bookedSlot = allSlots.find(slot => slot.booked == false && slot.category ==  req.body.category)
 
         bookedSlot.booked = true
 
